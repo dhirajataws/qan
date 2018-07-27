@@ -27,7 +27,7 @@
     "test": " mocha './test/**/*.spec.js' --recursive --compilers js:babel-core/register  --reporter spec --watch",
     "eslint": "node ./node_modules/eslint/bin/eslint src",
     "transpile": "babel  src --source-maps-inline -d ./dist",
-    "save":"node ./dist/save.js"
+    "save":"node -e 'require(\"./dist/save\").fetchUrlData()'"
   },
   "author": "dhirajataws <dhirajataws@gmail.com>",
   "license": "MIT"

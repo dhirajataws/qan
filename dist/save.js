@@ -42,9 +42,14 @@ var urlArray = [
     'http://site3.com/path',
     'http://test.com/path'
 ];
-var fetchUrlData = function () {
+// export const initaliseDb= function(){
+//   const db = new Database();
+//   db.data = carDetails;
+//   return db;
+// }
+exports.fetchUrlData = function () {
     return __awaiter(this, void 0, void 0, function () {
-        var db, allPromises, combinedPromise, details;
+        var db, allPromises, combinedPromise, details, _i, details_1, item;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -54,28 +59,25 @@ var fetchUrlData = function () {
                     return [4 /*yield*/, combinedPromise];
                 case 1:
                     details = _a.sent();
-                    // for (const item of details) {
-                    //   db.save(<Car>item)
-                    // }
-                    details.map(function (item) { return db.save(item); });
-                    return [2 /*return*/, db.get()];
-            }
-        });
-    });
-};
-exports.testFetchUrlData = function () {
-    return __awaiter(this, void 0, void 0, function () {
-        var result, filteredResult;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, fetchUrlData()];
-                case 1:
-                    result = _a.sent();
-                    filteredResult = result.filter(function (item) { return item.url ? item.url.split('/')[2] === 'test.com' : false; });
-                    if (filteredResult.length > 0)
-                        console.log(filteredResult);
+                    for (_i = 0, details_1 = details; _i < details_1.length; _i++) {
+                        item = details_1[_i];
+                        db.save(item);
+                        if (item.url && item.url.split('/')[2] === 'test.com') {
+                            console.log(item);
+                        }
+                    }
                     return [2 /*return*/];
             }
         });
     });
-}();
+};
+exports.findAllNonAWDCars = function () {
+    var db = index_1.initaliseDb();
+    return db.find('color', /Black/);
+};
+// export const testFetchUrlData = async function () {
+//   const result = await fetchUrlData()
+//   const filteredResult = result.filter(item => item.url ? item.url.split('/')[2] === 'test.com':false)
+//   if(filteredResult.length > 0)
+//   console.log(filteredResult)
+// }() 

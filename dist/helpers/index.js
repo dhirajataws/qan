@@ -14,8 +14,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
         while (_) try {
-            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [0, t.value];
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
                 case 0: case 1: t = op; break;
                 case 4: _.label++; return { value: op[1], done: false };
@@ -41,26 +41,25 @@ function fetchUrlResults(url) {
         return __generator(this, function (_a) {
             return [2 /*return*/, new Promise(function (resolve, reject) {
                     setTimeout(function () {
-                        // console.log(url)
                         var cars = index_1.carDetails.filter(function (item) { return item.url === url; });
                         cars.length > 0 ? resolve(cars[0]) : reject('Not Found');
-                        // resolve('ok')
                     }, 1000);
                 })];
         });
     });
 }
 exports.fetchUrlResults = fetchUrlResults;
+exports.initaliseDb = function () {
+    var db = new Database();
+    db.data = index_1.carDetails;
+    return db;
+};
 var Request = /** @class */ (function () {
     function Request() {
+        this.db = exports.initaliseDb();
     }
     Request.prototype.get = function (url) {
-        return {
-            brand: "branch",
-            color: "color",
-            engineSize: 100,
-            drive: "2wd"
-        };
+        return this.db.get().filter(function (item) { return item.hasOwnProperty('url') && item.url === url; });
     };
     return Request;
 }());
@@ -78,49 +77,8 @@ var Database = /** @class */ (function () {
         return this.data;
     };
     Database.prototype.find = function (attr, what) {
-        // const regex = new RegExp("dhiraj")
-        // regex.test()
         return this.data.filter(function (item) { return item.hasOwnProperty(attr) && what.test(item[attr]); });
-        // return carObjects.filter(item => what.test(item[what]))
     };
     return Database;
 }());
 exports.Database = Database;
-// export class CarDb implements dbinterface{
-//   data:any[]
-//   constructor(){
-//     this.data = []
-//   }
-//   save(carObject:Car){
-//     this.data=[...this.data,carObject]
-//   }
-//   // get():any[]{
-//   //   return this.data
-//   // }
-//  /* find(attr: string, what: RegExp):Car[]{
-//     return {
-//       brand:"branch",
-//       color:"color",
-//       engineSize:100,
-//       drive:"2wd"
-//     }
-//     // const regex = new RegExp("dhiraj")
-//     // regex.test()
-//
-//     // let carObjects = this.data.filter(item => item is Car)
-//     // return carObjects.filter(item => what.test(item[what]))
-//   }*/
-// }
-// export class Database{
-//   car_db:CarDb
-//   constructor(){
-//     this.car_db= new CarDb();
-//   }
-//   save(obj:Object){
-//     // this.data=[...this.data,obj]
-//     if(obj instanceof Car ){
-//       this.car_db.save(obj)
-//     }
-//   }
-//
-// } 
