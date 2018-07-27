@@ -5,29 +5,28 @@
   "main": "index.js",
   "repository": "git@github.com:dhirajataws/qan.git",
   "dependencies": {
+    "@types/chai": "^4.1.4",
+    "@types/mocha": "^5.2.5",
     "@types/node": "^10.5.3",
+    "@types/sinon": "^5.0.1",
     "assert": "^1.4.1",
-    "babel-core": "^6.26.3",
-    "babel-preset-es2015": "^6.24.1",
     "bunyan": "^1.8.12",
-    "eslint": "^5.0.1",
+    "chai": "^4.1.2",
     "mocha": "^5.2.0",
-    "sinon": "^6.1.0",
+    "sinon": "^6.1.4",
+    "ts-node": "^7.0.0",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.14.0",
     "typescript": "^2.9.2"
   },
-  "devDependencies": {
-    "babel-cli": "^6.26.0"
-  },
+  "devDependencies": {},
   "bin": {
-    "mocha": "./node_modules/mocha/bin/mocha",
-    "babel": "./node_modules/.bin/babel"
+    "mocha": "./node_modules/mocha/bin/mocha"
   },
   "scripts": {
-    "start": "npm run loadkeys && npm run eslint && npm run transpile &&  node ./dist/index.js",
-    "test": " mocha './test/**/*.spec.js' --recursive --compilers js:babel-core/register  --reporter spec --watch",
-    "eslint": "node ./node_modules/eslint/bin/eslint src",
-    "transpile": "babel  src --source-maps-inline -d ./dist",
-    "save":"node -e 'require(\"./dist/save\").fetchUrlData()'"
+    "test": "mocha -r ts-node/register src/**/*.spec.ts",
+    "lint": "tslint --config tslint.json --project tsconfig.json ",
+    "save": "node -e 'require(\"./dist/save\").fetchUrlData()'"
   },
   "author": "dhirajataws <dhirajataws@gmail.com>",
   "license": "MIT"

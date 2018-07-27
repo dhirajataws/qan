@@ -35,45 +35,56 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var index_1 = require("./helpers/index");
-var loggerobj = require('bunyan').createLogger({ name: 'index' });
-var urlList = [
-    'http://site1.com/path',
-    'http://site2.com/path',
-    'http://site3.com/path',
-    'http://test.com/path'
-];
-exports.fetchUrlData = function (_a) {
-    var _b = _a.db, db = _b === void 0 ? new index_1.Database() : _b, _c = _a.urlArray, urlArray = _c === void 0 ? urlList : _c, _d = _a.logger, logger = _d === void 0 ? loggerobj : _d;
-    return __awaiter(this, void 0, void 0, function () {
-        var allPromises, combinedPromise, details, _i, details_1, item, e_1;
-        return __generator(this, function (_e) {
-            switch (_e.label) {
-                case 0:
-                    _e.trys.push([0, 2, , 3]);
-                    allPromises = urlArray.map(index_1.fetchUrlResults);
-                    combinedPromise = Promise.all(allPromises);
-                    return [4 /*yield*/, combinedPromise];
-                case 1:
-                    details = _e.sent();
-                    for (_i = 0, details_1 = details; _i < details_1.length; _i++) {
-                        item = details_1[_i];
-                        db.save(item);
-                        if ((item.url !== undefined) && item.url.split('/')[2] === 'test.com') {
-                            logger.info(item);
-                        }
-                    }
-                    return [3 /*break*/, 3];
-                case 2:
-                    e_1 = _e.sent();
-                    logger.error(e_1);
-                    throw e_1;
-                case 3: return [2 /*return*/];
-            }
+var assert = require("assert");
+var index_1 = require("./index");
+var index_2 = require("./index");
+describe('get Url function', function () {
+    var request;
+    beforeEach(function () {
+        request = new index_1.Request();
+    });
+    afterEach(function () {
+        request = undefined;
+    });
+    it('should fetch details based on url', function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var url, result;
+            return __generator(this, function (_a) {
+                url = 'http://test.com/path';
+                result = request.get(url);
+                assert(result[0].url === url);
+                return [2 /*return*/];
+            });
         });
     });
-};
-exports.findAllNonAWDCars = function (color, what) {
-    var db = index_1.initaliseDb();
-    return db.find(color, what);
-};
+});
+describe('Database save', function () {
+    var db, car;
+    beforeEach(function () {
+        db = new index_2.Database();
+        car = {
+            brand: 'site1',
+            color: 'Red',
+            engineSize: 100,
+            drive: '2wd'
+        };
+    });
+    afterEach(function () {
+        db = undefined;
+        car = undefined;
+    });
+    it('should add car to database', function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var savedObject, matching;
+            return __generator(this, function (_a) {
+                db.save(car);
+                savedObject = db.get()[0];
+                assert(savedObject !== undefined);
+                matching = true;
+                Object.keys(car).forEach(function (item) { return car[item] !== savedObject[item] ? matching = false : matching = true; });
+                assert(matching);
+                return [2 /*return*/];
+            });
+        });
+    });
+});

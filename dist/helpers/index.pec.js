@@ -35,45 +35,35 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var index_1 = require("./helpers/index");
-var loggerobj = require('bunyan').createLogger({ name: 'index' });
-var urlList = [
-    'http://site1.com/path',
-    'http://site2.com/path',
-    'http://site3.com/path',
-    'http://test.com/path'
-];
-exports.fetchUrlData = function (_a) {
-    var _b = _a.db, db = _b === void 0 ? new index_1.Database() : _b, _c = _a.urlArray, urlArray = _c === void 0 ? urlList : _c, _d = _a.logger, logger = _d === void 0 ? loggerobj : _d;
-    return __awaiter(this, void 0, void 0, function () {
-        var allPromises, combinedPromise, details, _i, details_1, item, e_1;
-        return __generator(this, function (_e) {
-            switch (_e.label) {
-                case 0:
-                    _e.trys.push([0, 2, , 3]);
-                    allPromises = urlArray.map(index_1.fetchUrlResults);
-                    combinedPromise = Promise.all(allPromises);
-                    return [4 /*yield*/, combinedPromise];
-                case 1:
-                    details = _e.sent();
-                    for (_i = 0, details_1 = details; _i < details_1.length; _i++) {
-                        item = details_1[_i];
-                        db.save(item);
-                        if ((item.url !== undefined) && item.url.split('/')[2] === 'test.com') {
-                            logger.info(item);
-                        }
-                    }
-                    return [3 /*break*/, 3];
-                case 2:
-                    e_1 = _e.sent();
-                    logger.error(e_1);
-                    throw e_1;
-                case 3: return [2 /*return*/];
-            }
+var assert = require("assert");
+//
+describe('get Url function', function () {
+    //   let urlArray:string[], logger:any
+    beforeEach(function () {
+        //     // urlArray = [
+        //     //   'http://site1.com/path',
+        //     //   'http://site2.com/path',
+        //     //   'http://site3.com/path',
+        //     //   'http://test.com/path'
+        //     // ]
+        //     // logger = require('bunyan').createLogger({name: 'index'})
+        //     // logger.info = sinon.fake();
+    });
+    afterEach(function () {
+        //     // urlArray = undefined
+    });
+    it('should find details based on parameters', function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                //   try {
+                //     const result = await findAllNonAWDCars('drive',/(2|4)wd/);
+                //     console.log(result);
+                //     assert(result.filter(item => item.drive === 'awd').length === 0)
+                //   } catch (e) {
+                //     console.log(e);
+                assert(false);
+                return [2 /*return*/];
+            });
         });
     });
-};
-exports.findAllNonAWDCars = function (color, what) {
-    var db = index_1.initaliseDb();
-    return db.find(color, what);
-};
+});

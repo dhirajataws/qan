@@ -1,5 +1,6 @@
 import {Car} from '../interfaces';
 import {carDetails} from "../data/index";
+
 export async function fetchUrlResults(url: string) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -8,21 +9,7 @@ export async function fetchUrlResults(url: string) {
     }, 1000)
   })
 }
-export const initaliseDb= function(){
-  const db = new Database();
-  db.data = carDetails;
-  return db;
-}
-export class Request {
-  db:any;
-  constructor() {
-    this.db = initaliseDb();
-  }
 
-  get(url: string): Car {
-    return this.db.get().filter(item => item.hasOwnProperty('url') && item.url === url)
-  }
-}
 
 export class Database {
   data: any[]
@@ -43,5 +30,23 @@ export class Database {
 
   find(attr: string, what: RegExp): any[] {
     return this.data.filter(item => item.hasOwnProperty(attr) && what.test(item[attr]))
+  }
+}
+
+export const initaliseDb = function () {
+  const db = new Database();
+  db.data = carDetails;
+  return db;
+}
+
+export class Request {
+  db: any;
+
+  constructor() {
+    this.db = initaliseDb();
+  }
+
+  get(url: string): Car {
+    return this.db.get().filter((item: any) => item.hasOwnProperty('url') && item.url === url)
   }
 }

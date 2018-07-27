@@ -1,43 +1,34 @@
 import {Database, fetchUrlResults, initaliseDb} from "./helpers/index";
 import {Car} from "./interfaces/index";
-import {carDetails} from "./data/index";
 
-const urlArray = [
+const loggerobj = require('bunyan').createLogger({name: 'index'})
+
+const urlList = [
   'http://site1.com/path',
   'http://site2.com/path',
   'http://site3.com/path',
   'http://test.com/path'
 ]
 
-// export const initaliseDb= function(){
-//   const db = new Database();
-//   db.data = carDetails;
-//   return db;
-// }
-export const fetchUrlData = async function () {
-//Database is for saving any type of object to database
-  const db = new Database();
-
-  const allPromises = urlArray.map(fetchUrlResults)
-  const combinedPromise = Promise.all(allPromises)
-  const details = await combinedPromise;
-  for (const item of details) {
-    db.save(<Car>item)
-    if (item.url && item.url.split('/')[2] === 'test.com') {
-      console.log(item)
+export const fetchUrlData = async function ({db = new Database(), urlArray = urlList, logger = loggerobj}) {
+  // Database is for saving any type of object to database
+  try {
+    const allPromises = urlArray.map(fetchUrlResults)
+    const combinedPromise = Promise.all(allPromises)
+    const details = await combinedPromise;
+    for (const item of details) {
+      db.save(<Car>item)
+      if (((<Car>item).url !== undefined) && (<Car>item).url.split('/')[2] === 'test.com') {
+        logger.info(item)
+      }
     }
+  } catch (e) {
+    logger.error(e);
+    throw e;
   }
 };
-export const  findAllNonAWDCars= function () {
+export const findAllNonAWDCars = function (color: string, what: RegExp) {
   const db = initaliseDb();
-
-  return db.find('color',/Black/)
+  return db.find(color, what)
 }
 
-
-// export const testFetchUrlData = async function () {
-//   const result = await fetchUrlData()
-//   const filteredResult = result.filter(item => item.url ? item.url.split('/')[2] === 'test.com':false)
-//   if(filteredResult.length > 0)
-//   console.log(filteredResult)
-// }()
