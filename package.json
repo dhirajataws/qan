@@ -27,7 +27,5 @@
     "test": "mocha -r ts-node/register src/**/*.spec.ts",
     "lint": "tslint --config tslint.json --project tsconfig.json ",
     "save": "node -e 'require(\"./dist/save\").fetchUrlData()'"
-  },
-  "author": "dhirajataws <dhirajataws@gmail.com>",
-  "license": "MIT"
+  }
 }

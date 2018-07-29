@@ -1,4 +1,8 @@
-tsc --watch
+#### Exercise 1
+The Functionality is exposed using function and tested using test scripts
+
+###### Requirement 2
+Script is exposed as
+npm run save
 
 
-npm run save : script
