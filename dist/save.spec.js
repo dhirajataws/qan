@@ -160,7 +160,7 @@ describe('findAllNonAWDCars function - Exercise 1: Requirement 4', function () {
                         return [4 /*yield*/, save_1.findAllNonAWDCars('drive', /(2|4)wd/)];
                     case 1:
                         result = _a.sent();
-                        assert(result.filter(function (item) { return item.drive === 'awd'; }).length === , 0);
+                        assert(result.filter(function (item) { return item.drive === 'awd'; }).length === 0);
                         return [3 /*break*/, 3];
                     case 2:
                         e_4 = _a.sent();

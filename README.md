@@ -5,4 +5,8 @@ The Functionality is exposed using function and tested using test scripts
 Script is exposed as
 npm run save
 
+###### Compile application using typescript
+tsc --watch
+
+
 

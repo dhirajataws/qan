@@ -78,7 +78,7 @@ describe('findAllNonAWDCars function - Exercise 1: Requirement 4', () => {
   it('should find details based on parameters', async function () {
     try {
       const result = await findAllNonAWDCars('drive', /(2|4)wd/);
-      assert(result.filter(item => item.drive === 'awd').length ==== 0)
+      assert(result.filter(item => item.drive === 'awd').length === 0)
     } catch (e) {
       assert(false)
     }
